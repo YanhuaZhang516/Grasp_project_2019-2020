@@ -120,3 +120,12 @@ class PlateWithHoleObject(MujocoXMLObject):
 
     def __init__(self):
         super().__init__(xml_path_completion("objects/plate-with-hole.xml"))
+
+
+class ClothObject(MujocoXMLObject):
+    """
+    Square plate with a hole in the center (used in BaxterPegInHole)
+    """
+
+    def __init__(self):
+        super().__init__(xml_path_completion("objects/cloth.xml"))

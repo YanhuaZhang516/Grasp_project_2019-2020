@@ -6,13 +6,13 @@ if __name__ == "__main__":
 
     # initialize the task
     env = suite.make(
-        env_name='SawyerStack2',
+        env_name='DariasClothGrasp',
         has_renderer=True,
         ignore_done=True,
         use_camera_obs=False,
         control_freq=100,
     )
-    env = IKWrapper(env)   # Task space control
+    # env = IKWrapper(env)   # Task space control
 
     env.reset()
     env.viewer.set_camera(camera_id=0)

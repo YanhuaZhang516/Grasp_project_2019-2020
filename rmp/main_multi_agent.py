@@ -2,8 +2,8 @@
 # @author Anqi Li
 # @date April 8, 2019
 
-from rmp import Rmp_Root, RMP_Node
-from rmp.rmp_leaf import Leaf_CollisionAvoidance, CollisionAvoidanceDecentralized, GoalAttractorUni
+from rmp import RMP_Root, RMP_Node
+from rmp.rmp_leaf import CollisionAvoidance, CollisionAvoidanceDecentralized, GoalAttractorUni
 
 import numpy as np
 from numpy.linalg import norm
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     theta = np.arange(0, 2 * np.pi, 2 * np.pi / N)
     x_g = np.stack((np.cos(theta), np.sin(theta))).T * 10
 
-    rt = Rmp_Root('root')
+    rt = RMP_Root('root')
 
     robots = []
 

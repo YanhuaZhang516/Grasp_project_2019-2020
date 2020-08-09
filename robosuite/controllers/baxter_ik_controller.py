@@ -358,3 +358,6 @@ class BaxterIKController(Controller):
             elif velocities[i] <= -1.0:
                 velocities[i] = -1.0
         return velocities
+
+
+

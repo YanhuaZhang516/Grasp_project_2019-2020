@@ -1,0 +1,13 @@
+<mujoco model="Cloth">
+    <size nconmax="3000" njmax="3000" nstack="10000"/>
+    <worldbody>
+        <body name="B3_5" pos="0.38 -0.2 1.2">
+            <freejoint/>
+            <composite type="cloth" count="15 15 1" spacing="0.05" flatinertia="0.01">
+                <joint kind="main" damping="0.001"/>
+                <geom type="capsule" size="0.01 0.01" rgba=".8 .2 .1 1"/>
+            </composite>
+        </body> 
+
+    </worldbody>
+</mujoco>

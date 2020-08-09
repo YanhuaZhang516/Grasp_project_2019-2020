@@ -1,7 +1,6 @@
 from collections import OrderedDict
 from mujoco_py import MjSim, MjRenderContextOffscreen
 from mujoco_py import load_model_from_xml
-
 from robosuite.utils import SimulationError, XMLError, MujocoPyRenderer
 
 REGISTERED_ENVS = {}
@@ -29,7 +28,7 @@ class EnvMeta(type):
         cls = super().__new__(meta, name, bases, class_dict)
 
         # List all environments that should not be registered here.
-        _unregistered_envs = ["MujocoEnv", "SawyerEnv", "BaxterEnv"]
+        _unregistered_envs = ["MujocoEnv", "SawyerEnv", "BaxterEnv", "DariasEnv"]
 
         if cls.__name__ not in _unregistered_envs:
             register_env(cls)

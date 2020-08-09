@@ -76,11 +76,10 @@ class RMP_Node:
 
         for child in self.children:
 
-            # if any([child.J, child.J_dot, child.f, child.M]) is None:
-            if child.J is not None and child.J_dot is not None and child.f is not None and child.M is not None:
-                J_child = child.J(self.x)
-                J_dot_child = child.J_dot(self.x, self.x_dot)
+            J_child = child.J(self.x)
+            J_dot_child = child.J_dot(self.x, self.x_dot)
 
+            if child.f is not None and child.M is not None:
                 M_dJ_dx = dot3(child.M, J_dot_child, self.x_dot)
                 f += np.squeeze(dot2(J_child.T, child.f - M_dJ_dx))
                 M += dot3(J_child.T, child.M, J_child)  # Sandwich product
@@ -89,55 +88,19 @@ class RMP_Node:
         self.M = M
 
 
-# class Rmp_linkFrame(RMP_Node):
-#     """
-#         parent = RMP_Root
-#         x = [x, y, z, qx, qy, qz, qw]
-#     """
-#
-#     def __init__(self, name, parent, psi, J, J_dot, verbose=False):
-#         assert isinstance(parent, Rmp_Root)
-#
-#         RMP_Node.__init__(self, name, parent, psi, J, J_dot, verbose)
-
-
-class Rmp_linkFrame(RMP_Node):
+class RMP_linkFrame(RMP_Node):
     """
         parent = RMP_Root
-        x = [x, y, z, qw, qx, qy, qz]
+        x = [x, y, z, qx, qy, qz, qw]
     """
 
-    def __init__(self, name, parent, joint_index, f_fk, verbose=False):
-        assert isinstance(parent, Rmp_Root)
-
-        f_psi, f_jcb, f_jcb_dot = f_fk
-        psi = lambda q: f_psi(joint_index, q)
-        J = lambda q: f_jcb(joint_index, q)
-        J_dot = lambda q, dq: f_jcb_dot(joint_index, q, dq)
+    def __init__(self, name, parent, psi, J, J_dot, verbose=False):
+        assert isinstance(parent, RMP_Root)
 
         RMP_Node.__init__(self, name, parent, psi, J, J_dot, verbose)
 
 
-class Rmp_pos2frame(RMP_Node):
-    """
-        parent = RMP_Root
-        x = p0[x, y, z, qw, qx, qy, qz]-p1[x, y, z, qw, qx, qy, qz]
-    """
-
-    def __init__(self, name, parent, couple_joint_index, f_fk, verbose=False):
-        assert isinstance(parent, Rmp_Root)
-        p0 = couple_joint_index[0]
-        p1 = couple_joint_index[1]
-
-        f_psi, f_jcb, f_jcb_dot = f_fk
-        psi = lambda q: (f_psi(p0, q) - f_psi(p1, q))[0:3]
-        J = lambda q: (f_jcb(p0, q) - f_jcb(p1, q))[0:3, :]
-        J_dot = lambda q, dq: (f_jcb_dot(p0, q, dq) - f_jcb_dot(p1, q, dq))[0:3, :]
-
-        RMP_Node.__init__(self, name, parent, psi, J, J_dot, verbose)
-
-
-class Rmp_posControlPoint(RMP_Node):
+class RMP_posControlPoint(RMP_Node):
     """
         parent = RMP_robotLinkFrame
         x = [x, y, z]
@@ -146,7 +109,7 @@ class Rmp_posControlPoint(RMP_Node):
     def __init__(self, name, parent, offset=None, verbose=False):
         if offset is None:
             offset = [0., 0., 0.]
-        assert isinstance(parent, Rmp_linkFrame)
+        assert isinstance(parent, RMP_linkFrame)
 
         self.offset = np.array(offset)
 
@@ -165,14 +128,14 @@ class Rmp_posControlPoint(RMP_Node):
         RMP_Node.__init__(self, name, parent, psi, J, J_dot, verbose)
 
 
-class Rmp_oriControlPoint(RMP_Node):
+class RMP_oriControlPoint(RMP_Node):
     """
-        parent (RMP_robotLinkFrame):
+        parent = RMP_robotLinkFrame
         x = [x, y, z]
     """
 
     def __init__(self, name, parent, verbose=False):
-        assert isinstance(parent, Rmp_linkFrame)
+        assert isinstance(parent, RMP_linkFrame)
 
         def psi(p_x):
             p_quat = p_x[3:7]
@@ -187,7 +150,7 @@ class Rmp_oriControlPoint(RMP_Node):
         RMP_Node.__init__(self, name, parent, psi, J, J_dot, verbose)
 
 
-class Rmp_Root(RMP_Node):
+class RMP_Root(RMP_Node):
     """
     A root node
     """

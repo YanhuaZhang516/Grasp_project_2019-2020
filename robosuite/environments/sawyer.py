@@ -183,13 +183,13 @@ class SawyerEnv(MujocoEnv):
 
     def _pre_action(self, action):
         """
-        Overrides the superclass method to actuate the robot with the 
+        Overrides the superclass method to actuate the robot with the
         passed joint velocities and gripper control.
 
         Args:
             action (numpy array): The control to apply to the robot. The first
-                @self.mujoco_robot.dof dimensions should be the desired 
-                normalized joint velocities and if the robot has 
+                @self.mujoco_robot.dof dimensions should be the desired
+                normalized joint velocities and if the robot has
                 a gripper, the next @self.gripper.dof dimensions should be
                 actuation controls for the gripper.
         """

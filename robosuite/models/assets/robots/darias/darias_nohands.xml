@@ -1,0 +1,123 @@
+<mujoco model="darias">
+    <compiler angle="radian" meshdir="meshes/" />
+    <option timestep="0.0002" tolerance="1e-6"/>
+    <size njmax="3000" nconmax="3000" />
+    <actuator>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="R_SFE" name="torq_RSFE"/>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="R_SAA" name="torq_RSAA"/>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="R_HR" name="torq_RHR"/>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="R_EB" name="torq_REB"/>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="R_WR" name="torq_RWR"/>
+        <motor ctrllimited="true" ctrlrange="-12.0 12.0" joint="R_WFE" name="torq_RWFE"/>
+        <motor ctrllimited="true" ctrlrange="-12.0 12.0" joint="R_WAA" name="torq_RWAA"/>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="L_SFE" name="torq_LSFE"/>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="L_SAA" name="torq_LSAA"/>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="L_HR" name="torq_LHR"/>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="L_EB" name="torq_LEB"/>
+        <motor ctrllimited="true" ctrlrange="-80.0 80.0" joint="L_WR" name="torq_LWR"/>
+        <motor ctrllimited="true" ctrlrange="-12.0 12.0" joint="L_WFE" name="torq_LWFE"/>
+        <motor ctrllimited="true" ctrlrange="-12.0 12.0" joint="L_WAA" name="torq_LWAA"/>
+   </actuator>
+    <asset>
+        <mesh name="arm_base_convex" file="meshes/arm_base_convex.stl" />
+        <mesh name="arm_segment_a_convex" file="meshes/arm_segment_a_convex.stl" />
+        <mesh name="arm_segment_b_convex" file="meshes/arm_segment_b_convex.stl" />
+        <mesh name="arm_segment_last_convex" file="meshes/arm_segment_last_convex.stl" />
+        <mesh name="arm_wrist_convex" file="meshes/arm_wrist_convex.stl" />
+        <mesh name="righthandbase" file="meshes/righthandbase.stl" scale="0.001 0.001 0.001" />
+        <mesh name="finger_base" file="meshes/finger_base.stl" />
+        <mesh name="fore_proximalp" file="meshes/fore_proximalp.stl" scale="0.001 0.001 0.001" />
+        <mesh name="fore_middlep" file="meshes/fore_middlep.stl" scale="0.001 0.001 0.001" />
+        <mesh name="lefthandbase" file="meshes/lefthandbase.stl" />
+    </asset>
+    <worldbody>
+        <geom size="0.1 0.1 0.75" pos="-0.1 0 0.835" type="box" rgba="0.3 0.3 0.3 1" />
+        <!--<geom pos="-0.11 -0.06 1.5" quat="0.353554 0.612372 -0.353553 0.612372" type="mesh" rgba="0 0 0.8 1" mesh="arm_base_convex" /> -->
+       <!-- <geom pos="-0.11 0.06 1.5" quat="0.612372 -0.353553 0.612372 0.353554" type="mesh" rgba="0 0 0.8 1" mesh="arm_base_convex" /> -->
+
+        <body name="R_1_link" pos="-0.055 -0.155263 1.5" quat="0.353554 0.612372 -0.353553 0.612372">
+            <inertial pos="0 0 0.13" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00683333 0.00593333 0.0015" />
+            <joint name="R_SFE" pos="0 0 0" axis="0 0 1" limited="true" range="-2.96706 2.96706" damping="0.1" />
+            <geom quat="0 0 0 1" type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_a_convex" />
+            <body name="R_2_link" pos="0 0 0.2">
+                <inertial pos="0 0.06 0.07" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00683333 0.00593333 0.0015" />
+                <joint name="R_SAA" pos="0 0 0" axis="0 -1 0" limited="true" range="-2.0944 2.0944" damping="0.1" />
+                <geom pos="0 0 0.2" quat="0 0 1 0" type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_b_convex" />
+                <body name="R_3_link" pos="0 0 0.2">
+                    <inertial pos="0 0.06 0.13" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00683333 0.00593333 0.0015" />
+                    <joint name="R_HR" pos="0 0 0" axis="0 0 1" limited="true" range="-2.96706 2.96706" damping="0.1" />
+                    <geom type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_a_convex" />
+                    <body name="R_4_link" pos="0 0 0.2">
+                        <inertial pos="0 -0.06 0.07" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00683333 0.00593333 0.0015" />
+                        <joint name="R_EB" pos="0 0 0" axis="0 1 0" limited="true" range="-2.0944 2.0944" damping="0.1" />
+                        <geom pos="0 0 0.2" quat="0 -1 0 0" type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_b_convex" />
+                        <body name="R_5_link" pos="0 0 0.2">
+                            <inertial pos="0 0 0.124" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00632533 0.00542533 0.0015" />
+                            <joint name="R_WR" pos="0 0 0" axis="0 0 1" limited="true" range="-2.96706 2.96706" damping="0.1" />
+                            <geom quat="0 0 0 1" type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_last_convex" />
+                            <body name="R_6_link" pos="0 0 0.19">
+                                <inertial pos="0 0 0.0625" mass="1" diaginertia="0.00260417 0.00260417 0.00260417" />
+                                <joint name="R_WFE" pos="0 0 0" axis="0 -1 0" limited="true" range="-2.0944 2.0944" damping="0.1" />
+                                <geom quat="0 0 0 1" type="mesh" rgba="0.953 0.996 0.694 1" mesh="arm_wrist_convex" />
+                                <body name="right_endeffector_link" pos="0 0 0.078">
+                                    <inertial pos="0.000665605 0.00133386 0.067" quat="-0.0245828 0.702769 -0.0197878 0.710718" mass="1.5" diaginertia="0.00436661 0.00407968 0.00357047" />
+                                    <joint name="R_WAA" pos="0 0 0" axis="0 0 1" limited="true" range="-2.96706 2.96706" damping="0.1" />
+                                    <site name="sensorsurf" pos="0 0 0" size=".03 .03 .03" type="ellipsoid" rgba="0.3 0.2 0.1 0.3"/>
+                                    <geom pos="0.00701592 -0.0199944 0.025" quat="0.707388 0.706825 0 0" type="mesh" rgba="0.953 0.996 0.694 1" mesh="righthandbase" />
+                                    
+                                      
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+        <body name="L_1_link" pos="-0.055 0.155263 1.5" quat="0.612372 -0.353553 0.612372 0.353554">
+            <inertial pos="0 0 0.13" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00683333 0.00593333 0.0015" />
+            <joint name="L_SFE" pos="0 0 0" axis="0 0 1" limited="true" range="-2.96706 2.96706" damping="0.1" />
+            <geom quat="0 0 0 1" type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_a_convex" />
+            <body name="L_2_link" pos="0 0 0.2">
+                <inertial pos="0 0.06 0.07" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00683333 0.00593333 0.0015" />
+                <joint name="L_SAA" pos="0 0 0" axis="0 -1 0" limited="true" range="-2.0944 2.0944" damping="0.1" />
+                <geom pos="0 0 0.2" quat="0 0 1 0" type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_b_convex" />
+                <body name="L_3_link" pos="0 0 0.2">
+                    <inertial pos="0 0.06 0.13" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00683333 0.00593333 0.0015" />
+                    <joint name="L_HR" pos="0 0 0" axis="0 0 1" limited="true" range="-2.96706 2.96706" damping="0.1" />
+                    <geom type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_a_convex" />
+                    <body name="L_4_link" pos="0 0 0.2">
+                        <inertial pos="0 -0.06 0.07" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00683333 0.00593333 0.0015" />
+                        <joint name="L_EB" pos="0 0 0" axis="0 1 0" limited="true" range="-2.0944 2.0944" damping="0.1" />
+                        <geom pos="0 0 0.2" quat="0 -1 0 0" type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_b_convex" />
+                        <body name="L_5_link" pos="0 0 0.2">
+                            <inertial pos="0 0 0.124" quat="0.707107 0.707107 0 0" mass="1" diaginertia="0.00632533 0.00542533 0.0015" />
+                            <joint name="L_WR" pos="0 0 0" axis="0 0 1" limited="true" range="-2.96706 2.96706" damping="0.1" />
+                            <geom quat="0 0 0 1" type="mesh" rgba="0 0 0.8 1" mesh="arm_segment_last_convex" />
+                            <body name="L_6_link" pos="0 0 0.19">
+                                <inertial pos="0 0 0.0625" mass="1" diaginertia="0.00260417 0.00260417 0.00260417" />
+                                <joint name="L_WFE" pos="0 0 0" axis="0 -1 0" limited="true" range="-2.0944 2.0944" damping="0.1" />
+                                <geom quat="0 0 0 1" type="mesh" rgba="0.953 0.996 0.694 1" mesh="arm_wrist_convex" />
+                                <body name="left_endeffector_link" pos="0 0 0.078">
+                                    <inertial pos="0.000665605 0.00133386 0.067" quat="-0.0245828 0.702769 -0.0197878 0.710718" mass="1.5" diaginertia="0.00436661 0.00407968 0.00357047" />
+                                    <joint name="L_WAA" pos="0 0 0" axis="0 0 1" limited="true" range="-2.0944 2.0944" damping="0.1" />
+                                    <site name="sensorsurf_left" pos="0 0 0" size=".03 .03 .03" type="ellipsoid" rgba="0.3 0.2 0.1 0.3"/>
+                                    <geom pos="-0.00698407 -0.0200056 0.025" quat="0.707388 0.706825 0 0" type="mesh" rgba="0.953 0.996 0.694 1" mesh="lefthandbase" />
+                               
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+    <sensor>
+		<force name="right_endeffector_link_force"	site="sensorsurf"/>
+		<torque name="right_endeffector_link_torque"	site="sensorsurf"/>
+        <force name="left_endeffector_link_force"	site="sensorsurf_left"/>
+		<torque name="left_endeffector_link_torque"	site="sensorsurf_left"/>
+
+	</sensor>
+
+
+</mujoco>

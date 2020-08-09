@@ -11,7 +11,7 @@ from robosuite.models.tasks import MyTask, UniformRandomSampler
 
 from scipy.misc import derivative
 import copy
-from urdf2casadi import converter
+# from urdf2casadi import converter
 
 from os.path import join as pjoin
 import pybullet as p
@@ -127,12 +127,12 @@ class Env_SawyerRmp(mySawyerEnv):
         # initialize objects of interest
         cubeA = BoxObject(
             size=[0.02, 0.02, 0.02],
-            pos=[0.5, -0.5, 1.3],
+            pos=[0., -0.6, 1.3],
             rgba=[1, 0, 0, 1]
         )
         cubeB = BoxObject(
             size=[0.025, 0.025, 0.025],
-            pos=[0.3, -0.3, 1.2],
+            pos=[1.5, -0.1, 1.2],
             rgba=[0, 1, 0, 1],
         )
         self.mujoco_obstacle = OrderedDict([("cubeA", cubeA), ("cubeB", cubeB)])
@@ -219,8 +219,6 @@ class Env_SawyerRmp(mySawyerEnv):
         self.f_jcb = calJacobian
         self.f_jcb_dot = calJacobian_dot
 
-        self.f_fk = [calForwardKinematics, calJacobian, calJacobian_dot]
-
         p.setRealTimeSimulation(1)
 
     def get_obv_for_planning(self):
@@ -242,11 +240,6 @@ class Env_SawyerRmp(mySawyerEnv):
         # obstacle_pos.append(cubeB_pos)
         di["obstacle_pos"] = obstacle_pos
 
-        # di["image"] = self.sim.render(camera_name=self.camera_name,
-        #                               width=self.camera_width,
-        #                               height=self.camera_height,
-        #                               depth=self.camera_depth, )
-
         return di
 
     def step(self, action):
@@ -261,6 +254,7 @@ class Env_SawyerRmp(mySawyerEnv):
             self.sim.step()
             self.cur_time += self.model_timestep
         return
+
 
     def _pre_action(self, action):
         """
@@ -322,6 +316,7 @@ class Env_SawyerRmp(mySawyerEnv):
         init_pos = np.array([-0.5538, -0.8208, 0.4155, 1.8409, -0.4955, 0.6482, 1.9628])
         init_pos += np.random.randn(init_pos.shape[0]) * 0.02
         self.sim.data.qpos[self._ref_joint_pos_indexes] = np.array(init_pos)
+
 
     def _check_contact(self):
         """

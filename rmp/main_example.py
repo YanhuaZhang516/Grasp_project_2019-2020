@@ -3,7 +3,7 @@
 # @date April 8, 2019
 
 
-from rmp import Rmp_Root
+from rmp import RMP_Root
 from rmp import CollisionAvoidance, GoalAttractorUni
 
 import numpy as np
@@ -19,7 +19,7 @@ x_g = np.array([-3, 3])
 x_o = np.array([-2, 1])
 r_o = 1
 
-r = Rmp_Root('root')
+r = RMP_Root('root')
 leaf1 = CollisionAvoidance(name='collision_avoidance',
                            parent=r,
                            parent_param=None,
