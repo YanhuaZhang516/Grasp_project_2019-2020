@@ -17,3 +17,4 @@
 3. [robosuite(本项目)原始版本](https://github.com/StanfordVL/robosuite.git)
 4. [Pybullet机器人控制器实现](https://github.com/bulletphysics/bullet3/tree/master/examples/pybullet/examples)
 5. [逆运动学解算](https://git.ias.informatik.tu-darmstadt.de/ren/robottasksim/blob/master/robosuite/controllers/baxter_ik_controller.py)
+6. [Pybullet控制器操作手册](https://docs.google.com/document/d/10sXEhzFRSnvFcl3XxNGhnD4N2SedqwdAvK3dsihxVUA/edit#)
